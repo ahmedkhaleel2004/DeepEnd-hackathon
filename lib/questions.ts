@@ -24,7 +24,6 @@ const questions = [
 		placeholder: "Describe your interests here",
 		desc: "This will be used to provide you with relevant recommendations.",
 	},
-	// Add more questions as needed
 ];
 
 export default questions;

@@ -33,7 +33,7 @@ const Modal = ({ children, isOpen, handleClose }: ModalProps) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.3, ease: "backOut" }}
-      className="fixed inset-0 flex items-center justify-center bg-zinc-950 bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center bg-zinc-950 bg-opacity-50 backdrop-blur-sm"
       onClick={handleClose}
     >
       <motion.div
