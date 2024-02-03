@@ -19,7 +19,7 @@ export function useAuth(
 				const userData = await getUserData(user.uid);
 				setUserData(userData);
 				if (userData && userData.doneSurvey && !forChatbot) {
-					router.push("/projects");
+					router.push("/main");
 				} else if (userData && !userData.doneSurvey) {
 					router.push("/survey");
 				}
