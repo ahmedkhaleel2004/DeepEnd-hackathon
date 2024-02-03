@@ -1,30 +1,41 @@
 const questions = [
 	{
-		title: "Question 1",
-		placeholder: "Placeholder 1",
-		desc: "Description 1",
+		title: "What is your experience level?",
+		placeholder: "Enter your experience level here",
+		desc: "This will be used to provide you with relevant recommendations.",
 	},
 	{
-		title: "Question 2",
-		placeholder: "Placeholder 2",
-		desc: "Description 2",
+		title: "What languages are you familiar with?",
+		placeholder: "Enter your languages here in a comma separated list",
+		desc: "This will be used to provide you with relevant recommendations.",
 	},
 	{
-		title: "Question 3",
-		placeholder: "Placeholder 3",
-		desc: "Description 3",
+		title: "What frameworks/tools do you work with?",
+		placeholder: "Enter your frameworks/tools here in a comma separated list",
+		desc: "This will be used to provide you with relevant recommendations.",
 	},
 	{
-		title: "Question 4",
-		placeholder: "Placeholder 4",
-		desc: "Description 4",
+		title: "What is your role?",
+		placeholder: "Enter your role here",
+		desc: "This will be used to provide you with relevant recommendations.",
 	},
 	{
-		title: "Question 5",
-		placeholder: "Placeholder 5",
-		desc: "Description 5",
+		title: "What topics are you interested in?",
+		placeholder: "Describe your interests here",
+		desc: "This will be used to provide you with relevant recommendations.",
 	},
 	// Add more questions as needed
 ];
 
 export default questions;
+
+
+// what languages you work with
+
+// what frameworks/tools you work with
+
+// 
+
+// 
+
+// what topics are you interested
