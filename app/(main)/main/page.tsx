@@ -21,14 +21,7 @@ const Main = () => {
         );
       case 1:
         return (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <p style={{ marginRight: 2 }}>My Validation: </p>
-            <input
-              style={{ border: "2px solid red" }}
-              onChange={(e) => setStep2Data(e.currentTarget.value)}
-              value={step2Data}
-            />
-          </div>
+          <div style={{ display: "flex", justifyContent: "center" }}></div>
         );
       default:
         return null;
@@ -61,17 +54,14 @@ const Main = () => {
       </main>
 
       <Stepper
-        style={{ padding: 10 }}
+        style={{ display: "flex", padding: 10, flexDirection: "column" }}
         curStep={curStep}
         setCurStep={setCurStep}
       >
-        <Step label="Step 0 " />
-        <Step label="Step 1" />
-        <Step locked={step2Data === ""}>??</Step>
-        <Step locked={curStep < 2} />
-        <Step locked={curStep < 3} />
-        <Step locked={curStep < 4} />
-        <Step locked={curStep < 5} />
+        <Step label="Step 1">1</Step>
+        <Step label="Step 2">2</Step>
+        <Step label="Step 3">3</Step>
+        <Step label="Step 4">4</Step>
       </Stepper>
       {renderContent()}
     </>

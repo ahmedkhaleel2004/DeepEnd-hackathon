@@ -19,12 +19,12 @@ const Connector: React.FC<ConnectorProps> = ({
       style={{ height: height }}
     >
       <div
-        className={`absolute z-0  w-full border-t-8`}
+        className={`border-1-8 absolute  z-0 h-full`}
         style={{ borderColor: inActiveColor }}
       ></div>
       <div
         className={`transition-width  z-50 border-t-8  bg-red-400 duration-700 ease-in-out ${
-          isActive ? "w-full" : "w-0"
+          isActive ? "h-full" : "w-0"
         }`}
         style={{ borderColor: activeColor }}
       ></div>
