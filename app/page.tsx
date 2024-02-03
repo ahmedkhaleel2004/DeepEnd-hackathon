@@ -7,6 +7,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ModeToggle } from "@/components/component/mode-toggle";
+import { FaChevronRight } from "react-icons/fa";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,8 +45,12 @@ export default function Home() {
               fastest way to a career in tech.
             </p>
           </div>
-          <Button className="shadow-2xl" onClick={handleOpen}>
-            Sign in
+          <Button
+            className="border border-foreground shadow-2xl hover:bg-background hover:text-foreground"
+            onClick={handleOpen}
+          >
+            Sign In
+            <FaChevronRight className="ml-2" />
           </Button>
           <Modal isOpen={isOpen} handleClose={handleClose}>
             <ModalContent />
