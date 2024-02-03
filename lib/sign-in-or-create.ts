@@ -16,7 +16,7 @@ export async function githubSignIn(
             const additionalUserInfo = getAdditionalUserInfo(result);
             if (user) {
                 if (user.doneSurvey) {
-                    router.push("/projects");
+                    router.push("/main");
                 } else {
                     router.push("/survey");
                 }
@@ -75,7 +75,7 @@ export async function googleSignIn(
             const user = await getUserData(result.user.uid);
             if (user) {
                 if (user.doneSurvey) {
-                    router.push("/projects");
+                    router.push("/main");
                 } else {
                     router.push("/survey");
                 }
