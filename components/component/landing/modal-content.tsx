@@ -24,7 +24,7 @@ const ModalContent = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Card Title</CardTitle>
+        <CardTitle>Project Heaven!</CardTitle>
         <CardDescription>Card Description</CardDescription>
       </CardHeader>
       <CardContent>
