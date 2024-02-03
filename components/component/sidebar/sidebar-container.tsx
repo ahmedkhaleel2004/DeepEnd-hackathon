@@ -43,7 +43,7 @@ const SidebarContainer = ({
       >
         <div
           className={`flex h-screen ${
-            isHovered ? "bg-[black] opacity-50 transition duration-300" : ""
+            isHovered ? "opacity-50 transition duration-300" : ""
           }`}
         >
           <Sidebar userId={userId} loggedIn={loggedIn} />
