@@ -1,4 +1,4 @@
-import { signInWithGithub } from "./firebase";
+import { signInWithGithub, signInWithGoogle } from "./firebase";
 import { getAdditionalUserInfo, GithubAuthProvider } from "@firebase/auth";
 import { getUserData } from "./get-user-data";
 import { setDoc, doc } from "firebase/firestore";
@@ -6,7 +6,7 @@ import { db } from "./firebase";
 import type { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 // import { uploadUserRepoImg } from "./upload-user-repo-img";
 
-export async function signInFunc(
+export async function githubSignIn(
 	router: AppRouterInstance,
 	startCreatingAccount: any,
 	finishCreatingAccount: any
@@ -69,4 +69,36 @@ export async function signInFunc(
 			throw new Error("User not signed in");
 		}
 	});
+}
+
+export async function googleSignIn(
+	router: AppRouterInstance,
+	startCreatingAccount: any,
+	finishCreatingAccount: any
+) {
+    await signInWithGoogle().then(async (result) => {
+        if (result.user.uid) {
+			const user = await getUserData(result.user.uid);
+			if (user) {
+				if (user.doneSurvey) {
+					router.push("/projects");
+				} else {
+					router.push("/survey");
+				}
+			} else {
+				startCreatingAccount();
+				setDoc(doc(db, "users", result.user.uid), {
+					uid: result.user.uid,
+					doneSurvey: false,
+					photoURL: result.user.photoURL,
+					email: result.user.email,
+					name: result.user.displayName
+				});
+				finishCreatingAccount();
+				router.push("/survey");
+			}
+		} else {
+			throw new Error("User not signed in");
+		}
+    })
 }

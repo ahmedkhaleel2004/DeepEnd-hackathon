@@ -4,6 +4,7 @@ import {
 	GithubAuthProvider,
 	getAuth,
 	signOut,
+	GoogleAuthProvider,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage, ref } from "firebase/storage";
@@ -21,11 +22,13 @@ const firebaseConfig = {
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 // github provider
-const provider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider();
+const googleProvider = new GoogleAuthProvider();
+
 
 export const auth = getAuth();
 
-provider.addScope("repo"); // add more scopes here
+githubProvider.addScope("repo"); // add more scopes here
 
 export const signOutFunc = () => {
 	return new Promise<void>((resolve, reject) => {
@@ -43,7 +46,7 @@ export const signOutFunc = () => {
 
 export const signInWithGithub = () => {
 	return new Promise<any>((resolve, reject) => {
-		signInWithPopup(auth, provider)
+		signInWithPopup(auth, githubProvider)
 			.then((result) => {
 				// Sign in successful.
 				// This gives you a GitHub Access Token. You can use it to access the GitHub API.
@@ -77,6 +80,33 @@ export const signInWithGithub = () => {
 			});
 	});
 };
+
+export const signInWithGoogle = () => {
+    return new Promise<any>((resolve, reject) => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential?.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+                resolve(result);
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+                reject(error);
+            });
+    })
+}
+
 
 export const db = getFirestore(app);
 export const storage = getStorage();
