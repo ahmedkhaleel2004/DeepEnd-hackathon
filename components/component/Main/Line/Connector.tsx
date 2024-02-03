@@ -16,15 +16,15 @@ const Connector: React.FC<ConnectorProps> = ({
   return (
     <div
       className="relative flex w-full items-center justify-start"
-      style={{ height: height }}
+      style={{ width: "4px", height: height }}
     >
       <div
-        className={`border-1-8 absolute  z-0 h-full`}
+        className={`absolute z-0 h-full border-l-8`}
         style={{ borderColor: inActiveColor }}
       ></div>
       <div
         className={`transition-width  z-50 border-t-8  bg-red-400 duration-700 ease-in-out ${
-          isActive ? "h-full" : "w-0"
+          isActive ? "w-full" : "w-0"
         }`}
         style={{ borderColor: activeColor }}
       ></div>

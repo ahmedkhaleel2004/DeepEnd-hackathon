@@ -9,24 +9,6 @@ import { useState } from "react";
 
 const Main = () => {
   const [curStep, setCurStep] = useState(0);
-  const [step2Data, setStep2Data] = useState("");
-
-  const renderContent = () => {
-    switch (curStep) {
-      case 0:
-        return (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            First Step
-          </div>
-        );
-      case 1:
-        return (
-          <div style={{ display: "flex", justifyContent: "center" }}></div>
-        );
-      default:
-        return null;
-    }
-  };
 
   return (
     <>
@@ -53,17 +35,18 @@ const Main = () => {
         <div className="flex h-screen items-center justify-center"></div>
       </main>
 
-      <Stepper
-        style={{ display: "flex", padding: 10, flexDirection: "column" }}
-        curStep={curStep}
-        setCurStep={setCurStep}
-      >
-        <Step label="Step 1">1</Step>
-        <Step label="Step 2">2</Step>
-        <Step label="Step 3">3</Step>
-        <Step label="Step 4">4</Step>
-      </Stepper>
-      {renderContent()}
+      <main className="flex h-screen w-full">
+        <Stepper
+          className="flex w-full flex-col items-center justify-start"
+          curStep={curStep}
+          setCurStep={setCurStep}
+        >
+          <Step label="Step 1" />
+          <Step label="Step 2" />
+          <Step label="Step 3" />
+          <Step label="Step 4" />
+        </Stepper>
+      </main>
     </>
   );
 };
