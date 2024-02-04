@@ -53,7 +53,7 @@ function Page() {
               <ModeToggle />
             </div>
             <main className="flex justify-center">
-              <Timeline uid="test" projectIndex={0} />
+              <Timeline uid={userData?.uid} projectIndex={0} />
             </main>
           </>
         </div>
