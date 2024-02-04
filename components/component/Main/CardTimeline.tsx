@@ -15,7 +15,6 @@ import {
 import { ValueIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
 import { ProgressBar } from "./ProgressBar";
-import { Checkbox } from "@/components/ui/checkbox";
 
 interface TimelineEventsProp {
   step: string;
@@ -29,24 +28,23 @@ export function CardOfTimeline({
   actions,
 }: TimelineEventsProp) {
   return (
-    <>
+    <div>
       <Card>
         <CardHeader>
           <CardTitle>{step}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </CardHeader>
-        <CardContent className="space-y-2">
-          {actions.map((action, index) => (
-            <div className="flex items-center">
-              <Checkbox className="mr-2" />
-              <p key={index} className="py-2">
+        <CardContent>
+          <ul className="list-disc pl-4">
+            {actions.map((action, index) => (
+              <li key={index} className="mb-2">
                 {action}
-              </p>
-            </div>
-          ))}
+              </li>
+            ))}
+          </ul>
         </CardContent>
       </Card>
       <Separator className="my-4" />
-    </>
+    </div>
   );
 }

@@ -66,7 +66,17 @@ function Page() {
               </div>
               <ModeToggle />
             </div>
-            <main className="flex justify-center">
+            <main className="flex w-full flex-col items-center justify-center">
+              {selectedProject?.title ? (
+                <h1 className="mb-4 text-4xl font-semibold">
+                  {selectedProject.title}
+                </h1>
+              ) : (
+                <h1 className="mb-4 text-4xl font-semibold">
+                  Project Timeline Generator
+                </h1>
+              )}
+
               {selectedProject?.title ? (
                 <Timeline
                   uid={userData?.uid}

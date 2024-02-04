@@ -13,6 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useFetchProjects } from "@/lib/hooks/use-fetch-projects";
+import { useAuth } from "@/lib/hooks/use-auth";
 
 interface ProjectsListProps {
   userId: string;
@@ -66,6 +67,7 @@ const ProjectsList = ({
 
   return (
     <div>
+      <h2 className="mb-4 text-2xl font-bold">Your Projects</h2>
       {projects.map((project) => (
         <ProjectItem
           key={project.id}
