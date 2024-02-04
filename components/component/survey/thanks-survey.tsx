@@ -3,35 +3,79 @@
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-
-// this needs a lot of work
+import { getDoc, doc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
+import questions from "@/lib/questions";
 
 export function ThankSurvey() {
   const router = useRouter();
+  const [surveyAnswers, setSurveyAnswers] = useState([""]);
 
   const nextPage = () => {
     router.push("/main");
   };
 
+  async function fetchAnswers(userId: string) {
+    const docRef = doc(db, "questions", userId);
+    const docSnap = await getDoc(docRef);
+
+    let username = "";
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user !== null) {
+      username = user.displayName || "No Name";
+    }
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      const qaArray = [
+        username,
+        data.Q1 || "No answer",
+        data.Q2 || "No answer",
+        data.Q3 || "No answer",
+        data.Q4 || "No answer",
+        data.Q5 || "No answer",
+      ];
+
+      return qaArray;
+    } else {
+      console.log("No such document!");
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    const fetchAndSetAnswers = async () => {
+      const auth = getAuth();
+      const user = auth.currentUser;
+      if (user) {
+        const userId = user.uid;
+        const answers = await fetchAnswers(userId);
+        setSurveyAnswers(answers || []);
+      }
+    };
+
+    fetchAndSetAnswers();
+  }, []);
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-10">
       <Card>
         <CardHeader>
           <CardTitle>Submitted Information</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <span className="font-medium">Name</span>
-            <span className="text-gray-500">{}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="font-medium"></span>
-            <span className="text-gray-500">{}</span>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="font-medium">Question 3</span>
-            <span className="text-gray-500">{}</span>
-          </div>
+          {surveyAnswers.map((answer, index) => (
+            <div key={index} className="space-y-2">
+              <div className="font-medium">
+                {index === 0 ? "Name" : `${questions[index - 1]?.title}`}
+              </div>
+              <div className="text-gray-500">{answer}</div>
+            </div>
+          ))}
         </CardContent>
       </Card>
       <div className="flex items-center justify-center">
