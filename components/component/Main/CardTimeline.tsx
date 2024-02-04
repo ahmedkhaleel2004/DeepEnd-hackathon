@@ -6,16 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ValueIcon } from "@radix-ui/react-icons";
 import { Separator } from "@/components/ui/separator";
-import { ProgressBar } from "./ProgressBar";
 import ReactMarkdown from "react-markdown";
+import ChatMessage from "./message";
 
 interface TimelineEventsProp {
   step: string;
@@ -39,7 +32,7 @@ export function CardOfTimeline({
           <ul className="list-disc pl-4">
             {actions.map((action, index) => (
               <li key={index} className="mb-2">
-                <ReactMarkdown>{action}</ReactMarkdown>
+                <ChatMessage content={action} />
               </li>
             ))}
           </ul>
