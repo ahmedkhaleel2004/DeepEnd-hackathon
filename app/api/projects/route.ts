@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
@@ -69,20 +69,29 @@ async function getProjects(surveyAnswers: string, userId: string) {
 		response_format: { type: "json_object" },
 	});
 
-  const docRef = doc(db, "projects", userId);
-  
-  
+  if (completion.choices[0].message.content) {
+    const projects = JSON.parse(completion.choices[0].message.content);
+    const userDocRef = doc(db, "projects", userId);
 
+    try {
+      await setDoc(userDocRef, { projects });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  } else {
+    console.log("No content found in the completion choices");
+    return null;
+  }
 }
 
 export async function POST(request: NextRequest) {
 	const { userId } = await request.json();
     const surveyAnswers = await fetchAnswers(userId);
     if (surveyAnswers !== null) {
-        const projects = await getProjects(surveyAnswers, userId);
-        return NextResponse.json({ success: "Projects generated", projects });
+      const projects = await getProjects(surveyAnswers, userId);
+      return NextResponse.json({ success: "Projects generated", projects });
     } else {
-        console.log("No survey answers found for the given user ID");
+      console.log("No survey answers found for the given user ID");
     }
 
     return NextResponse.json({ error: "No survey answers found for the given user ID" });
