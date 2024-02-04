@@ -51,7 +51,7 @@ const Survey = () => {
           <ModeToggle />
         </nav>
       </header>
-      <main className="mx-auto flex min-h-screen max-w-2xl items-center justify-center">
+      <main className="mx-auto flex min-h-screen max-w-2xl justify-center">
         {!surveyCompleted ? (
           <div className="mb-4 px-4">
             <h1 className="text-3xl font-bold">Survey</h1>
