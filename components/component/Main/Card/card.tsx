@@ -50,6 +50,9 @@ export function CardOfTimeline(props: CardProps) {
   ];
 
   const [selectedObjective, setSelectedObjective] = useState("");
+  const [checklist, setChecklist] = useState(false);
+
+  const handleChecklist = () => setChecklist(!checklist);
 
   return (
     <>
@@ -89,7 +92,15 @@ export function CardOfTimeline(props: CardProps) {
             })}
           </ToggleGroup>
         </CardContent>
-        <CardFooter></CardFooter>
+        <CardFooter>
+          <button
+            onClick={handleChecklist}
+            className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+          >
+            {checklist ? "Hide Checklist" : "Show Checklist"}
+          </button>
+          {checklist && <></>}
+        </CardFooter>
       </Card>
     </>
   );
