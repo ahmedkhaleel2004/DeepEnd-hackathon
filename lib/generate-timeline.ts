@@ -28,15 +28,20 @@ export async function generateTimeline(
         Format your JSON output as follows:
 
         {
-          "timeline": [
-            "...",
-            "...",
-            "...",
+          "${title}": [
+            step: [
+              "description": "This is the first step",
+              "actions": [
+                "action 1",
+                "action 2"
+                // more actions
+              ]
+            ]
             // more steps
           ]
         }
         
-        Focus on creating well formatted outputs using markdown, codeblocks, and inline code wherever needed.
+        Focus on creating well formatted outputs using markdown, codeblocks, and inline code in each step.
         Each step should be detailed and contain a call to action for the developer to complete.
         `,
       },
@@ -51,7 +56,7 @@ export async function generateTimeline(
     const userDocRef = doc(db, "timelines", userId);
 
     try {
-      await setDoc(userDocRef, { timeline });
+      await setDoc(userDocRef, { timeline }, { merge: true });
     } catch (e) {
       console.error("Error adding document: ", e);
     }

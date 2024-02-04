@@ -10,6 +10,7 @@ interface SidebarContainerProps {
   isHovered: boolean;
   setSidebarOpen: (open: boolean) => void;
   setIsHovered: (hovered: boolean) => void;
+  onProjectSelect: (project: any) => void;
 }
 
 const SidebarContainer = ({
@@ -19,6 +20,7 @@ const SidebarContainer = ({
   setSidebarOpen,
   isHovered,
   setIsHovered,
+  onProjectSelect,
 }: SidebarContainerProps) => {
   const sidebarVariants = {
     open: {
@@ -46,7 +48,11 @@ const SidebarContainer = ({
             isHovered ? "opacity-50 transition duration-300" : ""
           }`}
         >
-          <Sidebar userId={userId} loggedIn={loggedIn} />
+          <Sidebar
+            userId={userId}
+            loggedIn={loggedIn}
+            onProjectSelect={onProjectSelect}
+          />
         </div>
       </motion.div>
       <div className="relative" onClick={() => setSidebarOpen(!sidebarOpen)}>

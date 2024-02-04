@@ -9,6 +9,14 @@ import Image from "next/image";
 import Link from "next/link";
 import Timeline from "@/components/component/timeline/timeline";
 
+interface Project {
+  id: string;
+  title: string;
+  summary: string;
+  languages: string[];
+  tools: string[];
+}
+
 function Page() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -16,10 +24,15 @@ function Page() {
   const router = useRouter();
   const userData = useAuth(router, true);
   const divRef = React.useRef<HTMLDivElement | null>(null);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     setLoggedIn(!!userData?.uid);
   }, [userData?.uid]);
+
+  useEffect(() => {
+    console.log("selectedProject", selectedProject);
+  });
 
   return (
     <div className="flex h-screen">
@@ -30,6 +43,7 @@ function Page() {
         setSidebarOpen={setSidebarOpen}
         isHovered={isHovered}
         setIsHovered={setIsHovered}
+        onProjectSelect={setSelectedProject}
       />
       <div className="flex grow overflow-hidden pl-0">
         <div
@@ -53,7 +67,17 @@ function Page() {
               <ModeToggle />
             </div>
             <main className="flex justify-center">
-              <Timeline uid={userData?.uid} projectIndex={0} />
+              {selectedProject?.title ? (
+                <Timeline
+                  uid={userData?.uid}
+                  projectName={selectedProject.title}
+                />
+              ) : (
+                <div>
+                  No project selected. Click on a project in the sidebar to
+                  start generating project timelines
+                </div>
+              )}
             </main>
           </>
         </div>

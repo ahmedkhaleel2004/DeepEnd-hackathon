@@ -5,11 +5,19 @@ import React, { useEffect, useState } from "react";
 import ProjectItem from "./project-item";
 import Modal from "../modal";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { useFetchProjects } from "@/lib/hooks/use-fetch-projects";
 
 interface ProjectsListProps {
   userId: string;
   loggedIn: boolean;
+  onProjectSelect: (project: any) => void;
 }
 
 interface Project {
@@ -20,62 +28,41 @@ interface Project {
   tools: string[];
 }
 
-const ProjectsList = ({ userId, loggedIn }: ProjectsListProps) => {
-  const [projects, setProjects] = useState<Project[]>([]);
+const ProjectsList = ({
+  userId,
+  loggedIn,
+  onProjectSelect,
+}: ProjectsListProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const { projects } = useFetchProjects(userId, loggedIn, setIsLoading);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
+    onProjectSelect(project);
   };
 
   const closeModal = () => {
     setSelectedProject(null);
   };
 
-  useEffect(() => {
-    console.log("Running useEffect in ProjectsList"); // Log when useeffect good
-    console.log("loggedIn:", loggedIn); // Log the value of loggedIn
-    console.log("userId:", userId); // Log the value of userId
-    if (loggedIn && userId) {
-      const fetchProjects = async () => {
-        // I believe here is where problems arise, idk what, but its fixable
-        try {
-          const projectsRef = doc(db, "projects", userId);
-
-          const unsubscribe = onSnapshot(projectsRef, (docSnapshot) => {
-            if (docSnapshot.exists()) {
-              const data = docSnapshot.data();
-              const projects =
-                data && data.projects && Array.isArray(data.projects.projects)
-                  ? data.projects.projects
-                  : [];
-              console.log("Fetched projects:", projects); // show fetched projects
-
-              const projectData: Project[] = projects.map(
-                (value: any, id: number) => ({
-                  id: id.toString(),
-                  title: value.title,
-                  summary: value.summary,
-                  languages: value.languages,
-                  tools: value.tools,
-                }),
-              );
-              console.log("Processed projects:", projectData); // show processed projects
-              setProjects(projectData);
-            } else {
-              console.log("No documents found");
-            }
-          });
-
-          return () => unsubscribe();
-        } catch (error) {
-          console.error("Error fetching projects: ");
-        }
-      };
-
-      fetchProjects();
-    }
-  }, [loggedIn, userId]);
+  const handleCreateTimeline = async () => {
+    setIsLoading(true);
+    await fetch("/api/generate-timeline", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        summary: selectedProject?.summary,
+        title: selectedProject?.title,
+        languages: selectedProject?.languages,
+        tools: selectedProject?.tools,
+      }),
+    });
+    setIsLoading(false);
+  };
 
   return (
     <div>
@@ -101,11 +88,27 @@ const ProjectsList = ({ userId, loggedIn }: ProjectsListProps) => {
               <p className="mb-2">Tools: {selectedProject.tools.join(", ")}</p>
             </div>
             <div className="self-end">
-              <Button className="mt-4">Make a Timeline</Button>
+              <Button className="mt-4" onClick={handleCreateTimeline}>
+                Make a Timeline
+              </Button>
             </div>
           </Card>
         </Modal>
       )}
+      <Modal isOpen={isLoading} handleClose={() => {}}>
+        <Card className="flex flex-col items-center justify-center">
+          <CardHeader>
+            <CardTitle>Generating {selectedProject?.title} Timeline</CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center justify-center">
+            <CardDescription>
+              The {selectedProject?.title} timeline is being generated. This
+              will take a few seconds.
+            </CardDescription>
+            <div className="mt-8 h-16 w-16 animate-spin  rounded-full border-t-2 border-foreground" />
+          </CardContent>
+        </Card>
+      </Modal>
     </div>
   );
 };
