@@ -30,6 +30,7 @@ export async function generateTimeline(
         {
           "${title}": [
             step: [
+              "step": "Title of the step",
               "description": "This is the first step",
               "actions": [
                 "action 1",
