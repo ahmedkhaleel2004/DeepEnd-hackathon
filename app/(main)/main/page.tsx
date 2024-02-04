@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-import { Stepper, Step } from "@/components/component/Main/Line/Stepper";
 import { ModeToggle } from "@/components/component/mode-toggle";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import Timeline from "@/components/component/timeline/timeline";
 
 const Main = () => {
   return (
     <>
-      <div className="mx-8 mt-8 flex items-center justify-between">
+      <div className="m-8 flex items-center justify-between">
         <div className="flex items-center">
           <Image
             src="/deependlogo.svg"
@@ -25,6 +24,9 @@ const Main = () => {
         </div>
         <ModeToggle />
       </div>
+      <main className="flex justify-center">
+        <Timeline uid="test" projectIndex={0} />
+      </main>
     </>
   );
 };
