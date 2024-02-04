@@ -45,13 +45,13 @@ function Page() {
         setIsHovered={setIsHovered}
         onProjectSelect={setSelectedProject}
       />
-      <div className="flex grow overflow-hidden pl-0">
+      <div className=" flex grow overflow-hidden pl-0">
         <div
           className="flex h-full w-full flex-col overflow-y-auto"
           ref={divRef}
         >
           <>
-            <div className="m-8 flex items-center justify-between">
+            <div className="m-8 flex items-center justify-between ">
               <div className="flex items-center">
                 <Image
                   src="/deependlogo.svg"
