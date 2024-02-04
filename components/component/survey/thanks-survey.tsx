@@ -36,7 +36,7 @@ export function ThankSurvey() {
       </Card>
       <div className="flex items-center justify-center">
         <Button variant="outline" onClick={nextPage}>
-          Go To Projects
+          Go To Main
         </Button>
       </div>
       <div className="rounded-md bg-green-100 p-4 text-green-900">
