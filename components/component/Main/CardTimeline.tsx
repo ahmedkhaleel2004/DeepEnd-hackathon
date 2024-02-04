@@ -29,7 +29,7 @@ export function CardOfTimeline({
   actions,
 }: TimelineEventsProp) {
   return (
-    <div>
+    <div className="w-full">
       <Card>
         <CardHeader>
           <CardTitle>{step}</CardTitle>
