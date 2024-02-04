@@ -53,6 +53,7 @@ export async function generateTimeline(
   });
 
   if (completion.choices[0].message.content) {
+    console.log(completion.choices[0].message.content);
     const timeline = JSON.parse(completion.choices[0].message.content);
     const userDocRef = doc(db, "timelines", userId);
 
