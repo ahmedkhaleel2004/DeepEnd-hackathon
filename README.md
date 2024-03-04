@@ -9,7 +9,7 @@
 
 
 <div align="center">
-    <img src="https://github.com/ahmedkhaleel2004/DeepEnd-hackathon/assets/111161052/3cc73ec6-334e-4d32-9b3b-7855da404bc1" alt="DeepEnd example timeline" width="1000"/>
+    <img src="https://github.com/ahmedkhaleel2004/DeepEnd-hackathon/assets/111161052/686113a0-0b5d-4d16-9451-091cca47d9fb" alt="DeepEnd example timeline" width="1000"/>
 </div>
 
 ## Introduction
